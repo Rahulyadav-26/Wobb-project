@@ -132,7 +132,7 @@ export function ProfileDetailPage() {
               <div className="border p-2 rounded">
                 <div className="text-gray-500">Engagements</div>
                 <div className="font-semibold">
-                  {formatEngagementRate(user.engagement_rate)}
+                  {formatFollowersDetail(user.engagements)}
                 </div>
               </div>
             )}

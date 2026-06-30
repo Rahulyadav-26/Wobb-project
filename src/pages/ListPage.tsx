@@ -1,10 +1,10 @@
 import { Layout } from "@/components/Layout";
 import { ProfileCard } from "@/components/ProfileCard";
-import { useList } from "@/context/ListContext";
+import { useListStore } from "@/store/useListStore";
 import { Link } from "react-router-dom";
 
 export function ListPage() {
-  const { savedProfiles } = useList();
+  const { savedProfiles } = useListStore();
 
   return (
     <Layout title="My List">

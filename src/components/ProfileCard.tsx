@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import type { Platform, UserProfileSummary } from "@/types";
 import { VerifiedBadge } from "./VerifiedBadge";
 import { formatFollowers } from "@/utils/formatters";
-import { useList } from "@/context/ListContext";
+import { useListStore } from "@/store/useListStore";
 
 interface ProfileCardProps {
   profile: UserProfileSummary;
@@ -17,7 +17,7 @@ export function ProfileCard({
   onProfileClick,
 }: ProfileCardProps) {
   const navigate = useNavigate();
-  const { addProfile, removeProfile, isProfileSaved } = useList();
+  const { addProfile, removeProfile, isProfileSaved } = useListStore();
   
   const isSaved = isProfileSaved(profile.username);
 

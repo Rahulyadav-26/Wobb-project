@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { useList } from "@/context/ListContext";
+import { useListStore } from "@/store/useListStore";
 
 interface LayoutProps {
   children: ReactNode;
@@ -8,7 +8,7 @@ interface LayoutProps {
 }
 
 export function Layout({ children, title }: LayoutProps) {
-  const { savedProfiles } = useList();
+  const { savedProfiles } = useListStore();
 
   return (
     <div className="p-4 min-h-screen">

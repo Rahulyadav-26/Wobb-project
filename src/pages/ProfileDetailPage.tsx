@@ -3,16 +3,16 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { VerifiedBadge } from "@/components/VerifiedBadge";
 import type { FullUserProfile, ProfileDetailResponse, Platform } from "@/types";
-import { formatEngagementRate, formatFollowers } from "@/utils/formatters";
+import { formatFollowers } from "@/utils/formatters";
 import { loadProfileByUsername } from "@/utils/profileLoader";
-import { useList } from "@/context/ListContext";
+import { useListStore } from "@/store/useListStore";
 
 
 export function ProfileDetailPage() {
   const { username } = useParams<{ username: string }>();
   const [searchParams] = useSearchParams();
   const platform = (searchParams.get("platform") as Platform) || "instagram";
-  const { addProfile, removeProfile, isProfileSaved } = useList();
+  const { addProfile, removeProfile, isProfileSaved } = useListStore();
   const [profileData, setProfileData] = useState<ProfileDetailResponse | null>(
     null
   );

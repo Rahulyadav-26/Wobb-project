@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import type { Platform } from "@/types";
 import { Layout } from "@/components/Layout";
 import { PlatformFilter } from "@/components/PlatformFilter";
@@ -8,22 +8,23 @@ import { extractProfiles, filterProfiles } from "@/utils/dataHelpers";
 export function SearchPage() {
   const [platform, setPlatform] = useState<Platform>("instagram");
   const [searchQuery, setSearchQuery] = useState("");
-  const [clickCount, setClickCount] = useState(0);
-
+  
   const allProfiles = useMemo(() => extractProfiles(platform), [platform]);
   const filtered = useMemo(() => filterProfiles(allProfiles, searchQuery), [allProfiles, searchQuery]);
-
-  const handleProfileClick = (username: string) => {
-    const newCount = clickCount + 1;
-    setClickCount(newCount);
-    console.log("Clicked profile:", username, "total clicks:", newCount);
-  };
+  const [displayCount, setDisplayCount] = useState(filtered.length);
+  
+  useEffect(() => {
+    setDisplayCount(filtered.length);
+  }, [filtered.length]);
 
   return (
-    <Layout title="Find Influencers">
-      <p className="text-gray-500 mb-4 text-sm">
-        Browse top creators across social platforms
-      </p>
+    <Layout>
+      <header className="mb-8">
+        <h1 className="text-h1 text-ink-900">Find your next creator</h1>
+        <p className="mt-1.5 text-body text-ink-500 transition-all duration-300">
+          <span className="tabular-nums font-medium text-ink-700">{displayCount.toLocaleString()}</span> creators match your filters
+        </p>
+      </header>
 
       <PlatformFilter
         selected={platform}
@@ -35,14 +36,10 @@ export function SearchPage() {
         onSearchChange={setSearchQuery}
       />
 
-      <p className="text-xs text-gray-400 mb-2">
-        Showing {filtered.length} of {allProfiles.length} on {platform}
-      </p>
-
       <ProfileList
         profiles={filtered}
         platform={platform}
-        onProfileClick={handleProfileClick}
+        onProfileClick={() => {}}
       />
     </Layout>
   );

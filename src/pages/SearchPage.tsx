@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import type { Platform } from "@/types";
 import { Layout } from "@/components/Layout";
 import { PlatformFilter } from "@/components/PlatformFilter";
@@ -10,8 +10,8 @@ export function SearchPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [clickCount, setClickCount] = useState(0);
 
-  const allProfiles = extractProfiles(platform);
-  const filtered = filterProfiles(allProfiles, searchQuery);
+  const allProfiles = useMemo(() => extractProfiles(platform), [platform]);
+  const filtered = useMemo(() => filterProfiles(allProfiles, searchQuery), [allProfiles, searchQuery]);
 
   const handleProfileClick = (username: string) => {
     const newCount = clickCount + 1;
@@ -42,7 +42,6 @@ export function SearchPage() {
       <ProfileList
         profiles={filtered}
         platform={platform}
-        searchQuery={searchQuery}
         onProfileClick={handleProfileClick}
       />
     </Layout>

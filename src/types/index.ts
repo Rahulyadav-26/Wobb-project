@@ -14,6 +14,11 @@ export interface UserProfileSummary {
   avg_views?: number;
 }
 
+export interface SavedProfile {
+  profile: UserProfileSummary;
+  platform: Platform;
+}
+
 export interface SearchAccount {
   account: {
     user_profile: UserProfileSummary;

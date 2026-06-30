@@ -2,11 +2,11 @@ import { useNavigate } from "react-router-dom";
 import type { Platform, UserProfileSummary } from "@/types";
 import { VerifiedBadge } from "./VerifiedBadge";
 import { formatFollowers } from "@/utils/formatters";
+import { useList } from "@/context/ListContext";
 
 interface ProfileCardProps {
   profile: UserProfileSummary;
   platform: Platform;
-  searchQuery: string;
   onProfileClick?: (username: string) => void;
 }
 
@@ -14,10 +14,12 @@ interface ProfileCardProps {
 export function ProfileCard({
   profile,
   platform,
-  searchQuery,
   onProfileClick,
 }: ProfileCardProps) {
   const navigate = useNavigate();
+  const { addProfile, removeProfile, isProfileSaved } = useList();
+  
+  const isSaved = isProfileSaved(profile.username);
 
   const handleClick = () => {
     if (onProfileClick) onProfileClick(profile.username);
@@ -28,7 +30,6 @@ export function ProfileCard({
     <div
       onClick={handleClick}
       className="flex items-center gap-3 p-3 border border-gray-300 mb-2 cursor-pointer hover:bg-gray-50 w-[700px]"
-      data-search={searchQuery}
     >
       <img src={profile.picture} className="w-12 h-12 rounded-full" />
       <div className="text-left flex-1">
@@ -39,15 +40,27 @@ export function ProfileCard({
         <div className="text-sm text-gray-600">{profile.fullname}</div>
         <div className="text-sm">{formatFollowers(profile.followers)} followers</div>
       </div>
-      {/* TODO: candidates must implement Add to List feature */}
-      {/* TODO: candidates must implement Add to List feature */}
-      <button
-        disabled
-        className="px-3 py-1 bg-gray-300 text-gray-500 text-sm rounded cursor-not-allowed"
-        onClick={(e) => e.stopPropagation()}
-      >
-        Add to List
-      </button>
+      {isSaved ? (
+        <button
+          className="px-3 py-1 border border-red-500 text-red-500 hover:bg-red-50 text-sm rounded transition-colors"
+          onClick={(e) => {
+            e.stopPropagation();
+            removeProfile(profile.username);
+          }}
+        >
+          Remove from List
+        </button>
+      ) : (
+        <button
+          className="px-3 py-1 bg-blue-600 text-white hover:bg-blue-700 text-sm rounded transition-colors"
+          onClick={(e) => {
+            e.stopPropagation();
+            addProfile(profile, platform);
+          }}
+        >
+          Add to List
+        </button>
+      )}
     </div>
   );
 }

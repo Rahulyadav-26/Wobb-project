@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { VerifiedBadge } from "@/components/VerifiedBadge";
-import type { FullUserProfile, ProfileDetailResponse } from "@/types";
+import type { FullUserProfile, ProfileDetailResponse, Platform } from "@/types";
 import { formatEngagementRate, formatFollowers } from "@/utils/formatters";
 import { loadProfileByUsername } from "@/utils/profileLoader";
+import { useList } from "@/context/ListContext";
 
 
 export function ProfileDetailPage() {
   const { username } = useParams<{ username: string }>();
   const [searchParams] = useSearchParams();
-  const platform = searchParams.get("platform") || "unknown";
+  const platform = (searchParams.get("platform") as Platform) || "instagram";
+  const { addProfile, removeProfile, isProfileSaved } = useList();
   const [profileData, setProfileData] = useState<ProfileDetailResponse | null>(
     null
   );
@@ -143,14 +145,21 @@ export function ProfileDetailPage() {
             </a>
           )}
 
-          {/* TODO: candidates must implement Add to List feature */}
-          {/* TODO: candidates must implement Add to List feature */}
-          <button
-            disabled
-            className="block mt-4 px-4 py-2 bg-gray-300 text-gray-500 rounded cursor-not-allowed"
-          >
-            Add to List
-          </button>
+          {isProfileSaved(user.username) ? (
+            <button
+              onClick={() => removeProfile(user.username)}
+              className="block mt-4 px-4 py-2 border-2 border-red-500 text-red-500 hover:bg-red-50 font-medium rounded transition-colors"
+            >
+              Remove from List
+            </button>
+          ) : (
+            <button
+              onClick={() => addProfile(user, platform)}
+              className="block mt-4 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 font-medium rounded transition-colors"
+            >
+              Add to List
+            </button>
+          )}
         </div>
       </div>
     </Layout>

@@ -39,21 +39,22 @@ function HeartSolidIcon({ className }: { className?: string }) {
   );
 }
 
+import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Platform, UserProfileSummary } from "@/types";
 import { formatFollowers } from "@/utils/formatters";
 import { useListStore } from "@/store/useListStore";
 
-export function ProfileCard({
+export const ProfileCard = memo(function ProfileCard({
   profile,
   platform,
   onProfileClick,
   style,
 }: ProfileCardProps) {
   const navigate = useNavigate();
-  const { addProfile, removeProfile, isProfileSaved } = useListStore();
-
-  const isSaved = isProfileSaved(profile.username);
+  const isSaved = useListStore((state) => state.isProfileSaved(profile.username));
+  const addProfile = useListStore((state) => state.addProfile);
+  const removeProfile = useListStore((state) => state.removeProfile);
 
   const handleClick = () => {
     const routeId = profile.username || profile.handle || profile.custom_name || profile.user_id;
@@ -129,4 +130,4 @@ export function ProfileCard({
       </div>
     </article>
   );
-}
+});

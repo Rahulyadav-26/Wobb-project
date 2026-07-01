@@ -1,3 +1,4 @@
+import { memo } from "react";
 import type { Platform, UserProfileSummary } from "@/types";
 import { ProfileCard } from "./ProfileCard";
 
@@ -8,7 +9,7 @@ interface ProfileListProps {
   isLoading?: boolean;
 }
 
-export function ProfileList({
+export const ProfileList = memo(function ProfileList({
   profiles,
   platform,
   onProfileClick,
@@ -59,4 +60,4 @@ export function ProfileList({
       ))}
     </div>
   );
-}
+});

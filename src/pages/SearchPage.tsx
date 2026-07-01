@@ -1,24 +1,28 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useDeferredValue, useCallback, lazy, Suspense } from "react";
 import { useSearchParams } from "react-router-dom";
 import type { Platform } from "@/types";
 import { Layout } from "@/components/Layout";
 import { PlatformFilter } from "@/components/PlatformFilter";
 import { ProfileList } from "@/components/ProfileList";
-import { MarketerPainPoints } from "@/components/MarketerPainPoints";
 import { extractProfiles, filterProfiles } from "@/utils/dataHelpers";
+
+const MarketerPainPoints = lazy(() => import("@/components/MarketerPainPoints").then(module => ({ default: module.MarketerPainPoints })));
 
 export function SearchPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const platform = (searchParams.get("platform") as Platform) || "instagram";
   const searchQuery = searchParams.get("q") || "";
+  const deferredSearchQuery = useDeferredValue(searchQuery);
   
   const allProfiles = useMemo(() => extractProfiles(platform), [platform]);
-  const filtered = useMemo(() => filterProfiles(allProfiles, searchQuery), [allProfiles, searchQuery]);
+  const filtered = useMemo(() => filterProfiles(allProfiles, deferredSearchQuery), [allProfiles, deferredSearchQuery]);
   const [displayCount, setDisplayCount] = useState(filtered.length);
   
   useEffect(() => {
     setDisplayCount(filtered.length);
   }, [filtered.length]);
+
+  const handleProfileClick = useCallback(() => {}, []);
 
   return (
     <Layout>
@@ -51,11 +55,13 @@ export function SearchPage() {
       <ProfileList
         profiles={filtered}
         platform={platform}
-        onProfileClick={() => {}}
+        onProfileClick={handleProfileClick}
       />
 
       <div className="mt-32 pt-16 border-t border-ink-100">
-        <MarketerPainPoints />
+        <Suspense fallback={<div className="h-96 animate-pulse bg-surface-card rounded-3xl" />}>
+          <MarketerPainPoints />
+        </Suspense>
       </div>
     </Layout>
   );

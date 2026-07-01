@@ -34,11 +34,11 @@ export function PlatformFilter({
   onSearchChange,
 }: PlatformFilterProps) {
   return (
-    <div className="mb-8 space-y-6">
+    <div className="mb-6 sm:mb-8 space-y-5 sm:space-y-6 px-2 sm:px-0">
       <div className="flex justify-center">
         <div
           role="tablist"
-          className="inline-flex items-center gap-0.5 rounded-full bg-ink-100 p-1"
+          className="flex w-full max-w-[360px] sm:w-auto sm:max-w-none sm:inline-flex items-center gap-1 sm:gap-0.5 rounded-[2rem] bg-ink-100 p-1"
         >
           {PLATFORMS.map((p) => {
             const isActive = selected === p;
@@ -48,7 +48,7 @@ export function PlatformFilter({
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => onChange(p)}
-                className={`relative rounded-full px-5 py-2 text-small font-medium transition-colors duration-200 ${
+                className={`relative flex-1 sm:flex-none whitespace-nowrap rounded-full px-2 py-2 sm:px-5 text-[13px] sm:text-small font-medium transition-colors duration-200 ${
                   isActive ? "text-ink-900" : "text-ink-500 hover:text-ink-900"
                 }`}
               >

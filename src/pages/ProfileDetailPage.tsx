@@ -167,7 +167,7 @@ export function ProfileDetailPage() {
         <div className="space-y-6">
           {/* Hero */}
           <section className="rounded-3xl border border-ink-100 bg-surface-card p-6 sm:p-8 shadow-xs">
-            <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
+            <div className="flex flex-col items-center text-center sm:flex-row sm:text-left sm:items-center gap-5">
               <img
                 src={user.picture}
                 alt={user.fullname}

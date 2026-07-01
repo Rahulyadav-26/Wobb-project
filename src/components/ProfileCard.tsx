@@ -117,11 +117,11 @@ export function ProfileCard({
         </button>
       </div>
 
-      <div className="mt-4 grid grid-cols-3 gap-2 border-t border-ink-100 pt-4">
+      <div className="mt-4 grid grid-cols-3 gap-1 sm:gap-2 border-t border-ink-100 pt-4">
         {stats.map((s) => (
           <div key={s.label} className="text-center">
-            <p className="text-h3 tabular-nums text-ink-900">{s.value}</p>
-            <p className="text-micro uppercase tracking-wide text-ink-500">
+            <p className="text-body sm:text-h3 tabular-nums font-semibold text-ink-900">{s.value}</p>
+            <p className="text-[10px] sm:text-micro uppercase tracking-wide text-ink-500">
               {s.label}
             </p>
           </div>

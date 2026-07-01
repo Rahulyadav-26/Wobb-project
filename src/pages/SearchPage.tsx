@@ -22,8 +22,8 @@ export function SearchPage() {
 
   return (
     <Layout>
-      <header className="mb-8">
-        <h1 className="text-h1 text-ink-900">Find your next creator</h1>
+      <header className="mb-6 sm:mb-8 text-center sm:text-left">
+        <h1 className="text-3xl font-bold sm:text-h1 text-ink-900">Find your next creator</h1>
         <p className="mt-1.5 text-body text-ink-500 transition-all duration-300">
           <span className="tabular-nums font-medium text-ink-700">{displayCount.toLocaleString()}</span> creators match your filters
         </p>

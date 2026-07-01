@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { useListStore } from "@/store/useListStore";
+import { ThemeToggle } from "./ThemeToggle";
 
 interface LayoutProps {
   children: ReactNode;
@@ -52,7 +53,7 @@ export function Layout({ children, title }: LayoutProps) {
   return (
     <div className="min-h-screen bg-surface-base">
       <header
-        className={`sticky top-0 z-50 border-b border-ink-100/60 bg-white/75 backdrop-blur-xl backdrop-saturate-150 supports-[backdrop-filter]:bg-white/60 transition-shadow duration-200 ${
+        className={`sticky top-0 z-50 border-b border-ink-100/60 bg-surface-card/75 backdrop-blur-xl backdrop-saturate-150 supports-[backdrop-filter]:bg-surface-card/60 transition-shadow duration-200 ${
           scrolled ? "shadow-sm" : ""
         }`}
       >
@@ -68,10 +69,12 @@ export function Layout({ children, title }: LayoutProps) {
             {/* nav items can go here in the future */}
           </nav>
 
-          <Link
-            to="/list"
-            className="group flex items-center gap-2 rounded-full border border-ink-100 bg-white px-3.5 py-2 text-small font-medium text-ink-700 shadow-xs transition-all duration-200 ease-snap hover:border-brand-200 hover:shadow-sm"
-          >
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <Link
+              to="/list"
+              className="group flex items-center gap-2 rounded-full border border-ink-100 bg-surface-card px-3.5 py-2 text-small font-medium text-ink-700 shadow-xs transition-all duration-200 ease-snap hover:border-brand-200 hover:shadow-sm"
+            >
             <HeartIcon className="h-4 w-4 text-brand-500" />
             My List
             {count > 0 && (
@@ -79,7 +82,8 @@ export function Layout({ children, title }: LayoutProps) {
                 {count}
               </span>
             )}
-          </Link>
+            </Link>
+          </div>
         </div>
       </header>
 

@@ -56,8 +56,9 @@ export function ProfileCard({
   const isSaved = isProfileSaved(profile.username);
 
   const handleClick = () => {
-    if (onProfileClick) onProfileClick(profile.username);
-    navigate(`/profile/${profile.username}?platform=${platform}`);
+    const routeId = profile.username || profile.handle || profile.custom_name || profile.user_id;
+    if (onProfileClick) onProfileClick(routeId || "");
+    navigate(`/profile/${routeId}?platform=${platform}`);
   };
 
   const handleToggleList = (e: React.MouseEvent) => {
@@ -79,14 +80,21 @@ export function ProfileCard({
     <article
       onClick={handleClick}
       style={style}
-      className="group relative cursor-pointer animate-fade-up rounded-2xl border border-ink-100 bg-white p-5 shadow-xs transition-all duration-300 ease-snap hover:-translate-y-1 hover:border-ink-200 hover:shadow-md"
+      className="group relative cursor-pointer animate-fade-up rounded-2xl border border-ink-100 bg-surface-card p-5 shadow-xs transition-all duration-300 ease-snap hover:-translate-y-1 hover:border-ink-200 hover:shadow-md"
     >
       <div className="flex items-start gap-3">
         <div className="relative">
           <img
             src={profile.picture}
-            className="h-14 w-14 rounded-full object-cover ring-1 ring-ink-100"
+            className="h-14 w-14 rounded-full object-cover ring-1 ring-ink-100 bg-surface-base"
             alt={profile.username}
+            referrerPolicy="no-referrer"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                profile.fullname || profile.username || "U"
+              )}&background=7C3AED&color=fff`;
+            }}
           />
           {profile.is_verified && (
             <VerifiedBadge verified={profile.is_verified} className="absolute -bottom-0.5 -right-0.5 h-5 w-5 text-brand-500 drop-shadow-sm" />

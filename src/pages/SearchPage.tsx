@@ -1,13 +1,16 @@
 import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import type { Platform } from "@/types";
 import { Layout } from "@/components/Layout";
 import { PlatformFilter } from "@/components/PlatformFilter";
 import { ProfileList } from "@/components/ProfileList";
+import { MarketerPainPoints } from "@/components/MarketerPainPoints";
 import { extractProfiles, filterProfiles } from "@/utils/dataHelpers";
 
 export function SearchPage() {
-  const [platform, setPlatform] = useState<Platform>("instagram");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const platform = (searchParams.get("platform") as Platform) || "instagram";
+  const searchQuery = searchParams.get("q") || "";
   
   const allProfiles = useMemo(() => extractProfiles(platform), [platform]);
   const filtered = useMemo(() => filterProfiles(allProfiles, searchQuery), [allProfiles, searchQuery]);
@@ -29,11 +32,20 @@ export function SearchPage() {
       <PlatformFilter
         selected={platform}
         onChange={(p) => {
-          setPlatform(p);
-          setSearchQuery("");
+          setSearchParams((prev) => {
+            prev.set("platform", p);
+            prev.delete("q");
+            return prev;
+          }, { replace: true });
         }}
         searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
+        onSearchChange={(q) => {
+          setSearchParams((prev) => {
+            if (q) prev.set("q", q);
+            else prev.delete("q");
+            return prev;
+          }, { replace: true });
+        }}
       />
 
       <ProfileList
@@ -41,6 +53,10 @@ export function SearchPage() {
         platform={platform}
         onProfileClick={() => {}}
       />
+
+      <div className="mt-32 pt-16 border-t border-ink-100">
+        <MarketerPainPoints />
+      </div>
     </Layout>
   );
 }

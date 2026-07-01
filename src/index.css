@@ -85,6 +85,17 @@
   color-scheme: light;
 }
 
+:root.dark {
+  color-scheme: dark;
+  --color-surface-base: #0a0a0a;
+  --color-surface-card: #171717;
+  --color-ink-900: #fafafa;
+  --color-ink-700: #a1a1aa;
+  --color-ink-500: #71717a;
+  --color-ink-300: #3f3f46;
+  --color-ink-100: #27272a;
+}
+
 html {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;

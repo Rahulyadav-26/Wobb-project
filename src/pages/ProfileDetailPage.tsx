@@ -111,14 +111,14 @@ export function ProfileDetailPage() {
   if (!profileData) {
     return (
       <Layout title={`@${username}`}>
-        <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-ink-200 bg-white/60 px-6 py-20 text-center">
+        <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-ink-200 bg-surface-card px-6 py-20 text-center">
           <h2 className="text-h2 text-ink-900">Profile Not Found</h2>
           <p className="mx-auto mt-2 max-w-sm text-body text-ink-500">
             Could not load details for @{username}. This may be because the mock
             data file is missing.
           </p>
           <Link
-            to="/"
+            to={`/?platform=${platform}`}
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-500 px-5 py-2.5 text-small font-semibold text-white shadow-sm transition-all duration-200 ease-snap hover:bg-brand-600 active:scale-[0.98]"
           >
             <ArrowLeftIcon className="h-4 w-4" /> Back to search
@@ -157,7 +157,7 @@ export function ProfileDetailPage() {
   return (
     <Layout title={user.fullname}>
       <Link
-        to="/"
+        to={`/?platform=${platform}`}
         className="mb-6 inline-flex items-center gap-2 text-small font-medium text-ink-500 transition-colors hover:text-ink-900"
       >
         <ArrowLeftIcon className="h-4 w-4" /> Back to search
@@ -166,12 +166,19 @@ export function ProfileDetailPage() {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_360px]">
         <div className="space-y-6">
           {/* Hero */}
-          <section className="rounded-3xl border border-ink-100 bg-white p-6 sm:p-8 shadow-xs">
+          <section className="rounded-3xl border border-ink-100 bg-surface-card p-6 sm:p-8 shadow-xs">
             <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
               <img
                 src={user.picture}
                 alt={user.fullname}
-                className="h-24 w-24 shrink-0 rounded-2xl object-cover ring-4 ring-brand-50 sm:h-28 sm:w-28"
+                referrerPolicy="no-referrer"
+                className="h-24 w-24 shrink-0 rounded-2xl object-cover ring-4 ring-brand-50 bg-surface-base sm:h-28 sm:w-28"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                    user.fullname || user.username || "U"
+                  )}&background=7C3AED&color=fff`;
+                }}
               />
               <div className="flex-1">
                 <div className="flex items-center gap-2">
@@ -208,7 +215,7 @@ export function ProfileDetailPage() {
 
         {/* Sticky sidebar */}
         <aside className="h-fit lg:sticky lg:top-24">
-          <div className="rounded-2xl border border-ink-100 bg-white p-6 shadow-sm">
+          <div className="rounded-3xl border border-ink-100 bg-surface-card p-6 shadow-sm">
             <h3 className="text-h3 text-ink-900 mb-4">Profile Actions</h3>
 
             <div className="space-y-3">
@@ -220,7 +227,7 @@ export function ProfileDetailPage() {
                 }
                 className={`flex w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-small font-semibold shadow-sm transition-all duration-200 ease-snap active:scale-[0.98] ${
                   isSaved
-                    ? "border border-ink-200 bg-white text-ink-900 hover:border-ink-300 hover:bg-ink-50"
+                    ? "border border-ink-200 bg-surface-card text-ink-900 hover:border-ink-300 hover:bg-surface-base"
                     : "bg-brand-500 text-white hover:bg-brand-600 hover:shadow-md"
                 }`}
               >
@@ -237,7 +244,7 @@ export function ProfileDetailPage() {
                   href={user.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex w-full items-center justify-center gap-2 rounded-full border border-ink-200 bg-white px-5 py-3 text-small font-semibold text-ink-700 shadow-xs transition-all duration-200 ease-snap hover:bg-ink-50 active:scale-[0.98]"
+                  className="flex w-full items-center justify-center gap-2 rounded-full border border-ink-200 bg-surface-card px-5 py-3 text-small font-semibold text-ink-700 shadow-xs transition-all duration-200 ease-snap hover:bg-surface-base active:scale-[0.98]"
                 >
                   <ExternalLinkIcon className="h-4 w-4" /> View on{" "}
                   {platform.charAt(0).toUpperCase() + platform.slice(1)}

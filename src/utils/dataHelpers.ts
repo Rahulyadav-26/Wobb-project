@@ -25,12 +25,16 @@ export function filterProfiles(
   if (!query) return profiles;
   return profiles.filter((p) => {
     const matchUsername = p.username
-      .toLowerCase()
-      .includes(query.toLowerCase());
+      ?.toLowerCase()
+      .includes(query.toLowerCase()) || false;
     const matchFullname = p.fullname
-      .toLowerCase()
-      .includes(query.toLowerCase());
-    return matchUsername || matchFullname;
+      ?.toLowerCase()
+      .includes(query.toLowerCase()) || false;
+    const matchHandle = p.handle
+      ?.toLowerCase()
+      .includes(query.toLowerCase()) || false;
+      
+    return matchUsername || matchFullname || matchHandle;
   });
 }
 

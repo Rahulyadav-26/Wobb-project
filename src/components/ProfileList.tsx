@@ -20,7 +20,7 @@ export function ProfileList({
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
-            className="h-[180px] rounded-2xl border border-ink-100 bg-white p-5"
+            className="h-[180px] rounded-2xl border border-ink-100 bg-surface-card p-5"
           >
             <div className="flex items-start gap-3">
               <div className="h-14 w-14 shrink-0 rounded-full bg-gradient-to-r from-ink-100 via-ink-100/40 to-ink-100 bg-[length:200%_100%] animate-shimmer" />
@@ -38,7 +38,7 @@ export function ProfileList({
 
   if (profiles.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-ink-200 bg-white/60 px-6 py-20 text-center">
+      <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-ink-200 bg-surface-card px-6 py-20 text-center">
         <p className="text-body text-ink-500">
           No profiles found matching your search.
         </p>

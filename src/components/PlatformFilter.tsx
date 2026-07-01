@@ -49,11 +49,11 @@ export function PlatformFilter({
                 aria-selected={isActive}
                 onClick={() => onChange(p)}
                 className={`relative rounded-full px-5 py-2 text-small font-medium transition-colors duration-200 ${
-                  isActive ? "text-white" : "text-ink-500 hover:text-ink-900"
+                  isActive ? "text-ink-900" : "text-ink-500 hover:text-ink-900"
                 }`}
               >
                 {isActive && (
-                  <span className="absolute inset-0 -z-10 rounded-full bg-brand-500 shadow-sm animate-fade-up" />
+                  <span className="absolute inset-0 -z-10 rounded-full bg-surface-card shadow-sm animate-fade-up" />
                 )}
                 <span className="relative z-10">{getPlatformLabel(p)}</span>
               </button>
@@ -69,7 +69,7 @@ export function PlatformFilter({
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Search creators by name, handle, or category..."
-          className="w-full rounded-2xl border border-ink-100 bg-white py-3.5 pl-12 pr-4 text-body text-ink-900 placeholder:text-ink-500 shadow-xs transition-all duration-200 ease-snap focus:border-brand-300 focus:shadow-glow focus:outline-none"
+          className="w-full rounded-2xl border border-ink-100 bg-surface-card py-3.5 pl-12 pr-4 text-body text-ink-900 placeholder:text-ink-500 shadow-xs transition-all duration-200 ease-snap focus:border-brand-300 focus:shadow-glow focus:outline-none"
         />
       </div>
     </div>

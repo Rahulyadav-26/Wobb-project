@@ -47,7 +47,7 @@ export function ListPage() {
   return (
     <Layout title="My List">
       {savedProfiles.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-ink-200 bg-white/60 px-6 py-20 text-center">
+        <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-ink-200 bg-surface-card py-32 px-4 text-center">
           <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-50">
             <HeartIcon className="h-8 w-8 text-brand-500" />
           </div>

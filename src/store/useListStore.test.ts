@@ -7,6 +7,7 @@ const mockProfile: UserProfileSummary = {
   username: 'testuser',
   fullname: 'Test User',
   picture: 'url',
+  url: 'url',
   is_verified: false,
   followers: 500,
 };

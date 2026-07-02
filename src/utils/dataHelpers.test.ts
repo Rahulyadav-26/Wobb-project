@@ -8,6 +8,7 @@ const mockProfiles: UserProfileSummary[] = [
     username: 'mrbeast',
     fullname: 'Jimmy Donaldson',
     picture: 'url',
+    url: 'url',
     is_verified: true,
     followers: 1000,
   },
@@ -17,6 +18,7 @@ const mockProfiles: UserProfileSummary[] = [
     fullname: 'Felix Kjellberg',
     handle: '@pewdiepie',
     picture: 'url',
+    url: 'url',
     is_verified: true,
     followers: 1000,
   }

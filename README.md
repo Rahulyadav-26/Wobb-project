@@ -1,101 +1,70 @@
-# Wobb Creator Search Platform
+# Wobb Creator Search Platform - Assignment Submission
 
 A modern, high-performance React application designed for discovering, filtering, and managing influencer profiles across YouTube, Instagram, and TikTok. 
 
-Built with **React 18/19**, **Vite**, **Tailwind CSS v4**, and **Zustand**, this project emphasizes fluid animations, robust state management, responsive UI design, and rigorous performance optimizations.
+Built with **React 19**, **Vite**, **Tailwind CSS v4**, and **Zustand**, this project emphasizes fluid animations, robust state management, responsive UI design, and rigorous performance optimizations.
 
 ---
 
-## 🚀 Key Features
+## 📋 Assignment Requirements & Overview
 
-* **Multi-Platform Search:** Seamlessly filter through hundreds of creators across YouTube, TikTok, and Instagram using an intuitive, beautifully animated segmented control tab.
-* **Instant Filtering & Pagination:** Leverages React 18's `useDeferredValue` for non-blocking, asynchronous search filtering, ensuring the UI remains buttery-smooth at 60fps even during heavy keystrokes.
-* **Dynamic Mock Generation:** Automatically generates gorgeous, full-page creator profiles on-the-fly for creators lacking dedicated detailed data files, utilizing intelligent fallback data mapping and authentic biographical dictionaries.
-* **Persistent "My List" Management:** Bookmark your favorite creators. Powered by **Zustand** and `localStorage` persistence, your saved list remains intact across browser sessions.
-* **Granular State Optimizations:** Utilizes atomic Zustand selectors and `React.memo()` to eliminate unnecessary cascading re-renders across lists and cards.
-* **Dark Mode & Theming:** Full system-aware and user-toggleable persistent Dark Mode, meticulously crafted using CSS variables and Tailwind utilities.
-* **Responsive Layout:** A mobile-first, scalable grid architecture that perfectly adapts to screens ranging from ultra-wide 4K monitors down to 320px mobile devices.
-* **Comprehensive Testing:** Rock-solid automated unit and integration tests powered by **Vitest** and **React Testing Library**.
+### What You Changed
+- **Dynamic Profile Generation:** Implemented a robust fallback system (`profileLoader.ts`) that intercepts routing for creators who lack dedicated detailed JSON files. It extracts their existing search data, injects authentic biographies (via a built-in dictionary), and dynamically generates a full profile page on-the-fly, completely eliminating "Profile Not Found" errors.
+- **Performance Optimizations:** 
+  - Integrated React 18's `useDeferredValue` in `SearchPage.tsx` to debounce the heavy array filtering, keeping search inputs instantly responsive (60fps) during typing.
+  - Refactored `ProfileCard` to utilize atomic Zustand selectors (`useListStore(state => state.isProfileSaved(...))`), preventing cascading re-renders across the entire list when a single card is saved.
+  - Wrapped list and card components in `React.memo()` and used `useCallback` for click handlers.
+  - Added lazy loading (`React.lazy` and `Suspense`) for below-the-fold components like `MarketerPainPoints`.
+- **UI & Routing Fixes:** Replaced `location.state` with URL search parameters (`useSearchParams`) to persist the active platform tab across navigations. Clicking "Back" from a profile page now correctly returns the user to the exact platform tab they were previously viewing (e.g., returning to YouTube instead of defaulting to Instagram).
+- **Asset Fixes:** Diagnosed broken Google/external image URLs returning 404s, downloaded the assets locally, and wrote Node scripts to mass-update the JSON data to point to local `/images/profiles/` paths.
+- **Dark Mode:** Implemented a persistent, system-aware global Dark Mode using Tailwind and Zustand.
+- **Responsiveness:** Performed a deep styling pass to ensure grid layouts, segmented tab controls, and typography scale flawlessly on ultra-narrow mobile devices (e.g., iPhone SE).
+
+### Libraries You Added
+- **Zustand:** Lightweight global state management (used for the "Saved List" and Dark Mode theme toggling). Chosen over Redux for its simplicity, zero boilerplate, and native `persist` middleware.
+- **Vitest & jsdom:** The fastest, Vite-native testing framework. Replaces legacy tools like Jest.
+- **@testing-library/react & @testing-library/jest-dom:** Industry standard for UI component testing and DOM assertions.
+
+### Assumptions Made
+- **Mock Data Scarcity:** I assumed the provided `tseries.json`, `MrBeast6000.json`, etc., were the *only* detailed data files available. Because generating 24 missing mock files manually is tedious, I assumed a dynamic code-driven fallback generator utilizing the existing search data was the most scalable and elegant solution.
+- **Local Asset Hosting:** I assumed that external URLs throwing 404s (like `yt3.googleusercontent.com`) were permanently broken due to CORS or deleted resources, leading me to assume hosting them locally in the `public` folder was the safest long-term fix.
+
+### Trade-offs
+- **Client-Side Filtering vs Server-Side:** Currently, filtering thousands of creators happens on the client side using JavaScript `Array.filter`. While this is extremely fast for our mock data size, in a real-world scenario with millions of creators, this would require server-side pagination and database queries. I traded server complexity for client-side speed.
+- **Dynamic Fallbacks vs Hardcoded Files:** Generating mock profiles on-the-fly saves file space and manual effort, but the trade-off is that these dynamically generated profiles lack deeply nested, unique data (like specific recent post arrays), so they use generic/fallback recent post data.
+
+### Any Remaining Improvements
+- **Virtualization:** If the search data JSON files grew to contain 10,000+ creators, rendering all those `<ProfileCard>` DOM nodes simultaneously would crash the browser. Implementing a virtualized list (e.g., `@tanstack/react-virtual`) would only render the cards currently visible on the screen.
+- **E2E Testing:** While robust unit and integration tests (Vitest) exist, adding End-to-End tests via **Playwright** or **Cypress** to physically click through the app in a headless browser would further guarantee production stability.
+- **Image Optimization:** Currently serving raw downloaded images. Integrating Vite image optimization plugins or serving WebP assets dynamically would decrease initial load bandwidth.
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Tech Stack & Getting Started
 
 * **Core:** React, TypeScript, Vite
-* **Styling:** Tailwind CSS (v4), GSAP (for micro-interactions and scroll animations)
-* **State Management:** Zustand (with persist middleware)
-* **Routing:** React Router v7
-* **Testing:** Vitest, jsdom, React Testing Library, Jest DOM
+* **Styling:** Tailwind CSS (v4), GSAP
+* **State:** Zustand 
+* **Testing:** Vitest, React Testing Library
 
----
+### Setup
 
-## 💻 Getting Started
-
-### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) (v18+ recommended) and npm installed on your machine.
-
-### Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Rahulyadav-26/Wobb-project.git
-   cd Wobb-project
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-### Running the Application
-
-To start the development server with Hot Module Replacement (HMR):
 ```bash
+# Clone the repository
+git clone https://github.com/Rahulyadav-26/Wobb-project.git
+
+# Install dependencies
+npm install
+
+# Run the dev server
 npm run dev
-```
-Navigate to `http://localhost:5173` in your browser.
 
-### Building for Production
-
-To compile TypeScript and bundle the application for production:
-```bash
-npm run build
-```
-The optimized assets will be generated in the `dist/` directory. You can preview the production build locally using:
-```bash
-npm run preview
-```
-
-### Running Tests
-
-The project uses Vitest for lightning-fast unit and integration testing.
-
-To run the test suite once:
-```bash
+# Run the automated test suite
 npm run test
 ```
 
----
-
-## 📁 Project Structure
-
-```text
-src/
-├── assets/         # Static assets and mock JSON data for creators
-├── components/     # Reusable UI components (ProfileCard, PlatformFilter, Layout, etc.)
-├── pages/          # Route-level page components (SearchPage, ProfileDetailPage, ListPage)
-├── store/          # Zustand global state management (useListStore, useThemeStore)
-├── types/          # Global TypeScript interfaces and type definitions
-├── utils/          # Helper functions (formatters, data extraction, dynamic generation)
-├── index.css       # Global CSS variables, Tailwind directives, and keyframes
-├── App.tsx         # Root component and Router configuration
-└── setupTests.ts   # Vitest and Jest DOM configuration
-```
-
----
-
-## ⚡ Performance Optimizations
-
-1. **React 18 Concurrency:** `useDeferredValue` is used on the primary search input. This prevents the heavy array-filtering logic from blocking the main thread, keeping typing instant and responsive.
-2. **Lazy Loading & Suspense:** Below-the-fold components (like `MarketerPainPoints`) are wrapped in `React.lazy()` to reduce the initial JavaScript bundle size and improve TTI (Time to Interactive).
-3. **Atomic State Selection:** The UI avoids pulling the entire Zustand store. Components select only the primitive booleans or arrays they need, ensuring elements like `ProfileCard` only re-render when their specific saved status changes.
+## ⚡ Verification Checklist
+✅ `npm run build` completes successfully.
+✅ The application runs without errors.
+✅ The repository is public.
+✅ Testing infrastructure is fully operational with zero failing tests.

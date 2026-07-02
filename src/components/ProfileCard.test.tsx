@@ -15,6 +15,7 @@ const mockProfile: UserProfileSummary = {
   username: 'mrbeast',
   fullname: 'Jimmy Donaldson',
   picture: 'https://example.com/pic.jpg',
+  url: 'https://example.com',
   is_verified: true,
   followers: 1000000,
   avg_views: 500000,

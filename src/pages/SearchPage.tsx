@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useDeferredValue, useCallback, lazy, Suspense } from "react";
+import { useMemo, useDeferredValue, useCallback, lazy, Suspense } from "react";
 import { useSearchParams } from "react-router-dom";
 import type { Platform } from "@/types";
 import { Layout } from "@/components/Layout";
@@ -16,11 +16,7 @@ export function SearchPage() {
   
   const allProfiles = useMemo(() => extractProfiles(platform), [platform]);
   const filtered = useMemo(() => filterProfiles(allProfiles, deferredSearchQuery), [allProfiles, deferredSearchQuery]);
-  const [displayCount, setDisplayCount] = useState(filtered.length);
-  
-  useEffect(() => {
-    setDisplayCount(filtered.length);
-  }, [filtered.length]);
+  const displayCount = filtered.length;
 
   const handleProfileClick = useCallback(() => {}, []);
 

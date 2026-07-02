@@ -1,5 +1,7 @@
 # Wobb Creator Search Platform - Assignment Submission
 
+🌍 **Live Demo:** [https://wobb-project-drab.vercel.app/](https://wobb-project-drab.vercel.app/)
+
 A modern, high-performance React application designed for discovering, filtering, and managing influencer profiles across YouTube, Instagram, and TikTok. 
 
 Built with **React 19**, **Vite**, **Tailwind CSS v4**, and **Zustand**, this project emphasizes fluid animations, robust state management, responsive UI design, and rigorous performance optimizations.

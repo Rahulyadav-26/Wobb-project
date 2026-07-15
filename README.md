@@ -86,6 +86,7 @@ I've added a small sample component and test to serve as a lightweight PR for re
 
 - `src/components/PRSampleToggle.tsx` — a simple toggle component to demo boolean state.
 - `src/components/PRSampleToggle.test.tsx` — test verifying toggle behavior.
+- `src/components/PRSampleBroken.tsx` — an intentionally broken sample component for PR review.
 
 ### Additional Utilities
 

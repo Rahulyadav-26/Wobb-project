@@ -7,7 +7,7 @@ describe("truncateText", () => {
   });
 
   it("truncates and adds ellipsis when needed", () => {
-    expect(truncateText("abcdefghijklmnopqrstuvwxyz", 10)).toBe("abcdefgh...");
+    expect(truncateText("abcdefghijklmnopqrstuvwxyz", 10)).toBe("abcdefg...");
   });
 
   it("truncates without ellipsis when ellipsis=false", () => {

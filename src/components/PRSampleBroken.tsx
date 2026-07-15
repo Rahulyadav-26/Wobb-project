@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 export const PRSampleBroken: React.FC = () => {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    // Intentionally wrong: this effect updates count on every render,
-    // causing an infinite re-render loop.
-    setCount((current) => current + 1);
-  }, [count]);
+  const count = 0;
 
   return (
     <div aria-label="pr-sample-broken">

@@ -84,4 +84,7 @@ I've added a small sample component and test to serve as a lightweight PR for re
 - `src/components/PRSample.tsx` — a tiny counter component.
 - `src/components/PRSample.test.tsx` — a Vitest + React Testing Library test verifying increment behavior.
 
+- `src/components/PRSampleToggle.tsx` — a simple toggle component to demo boolean state.
+- `src/components/PRSampleToggle.test.tsx` — test verifying toggle behavior.
+
 You can run the test suite with `npm run test` to see the new test pass locally.

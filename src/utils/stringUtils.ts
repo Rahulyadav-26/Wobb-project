@@ -9,4 +9,12 @@ export function truncateText(
   return text.slice(0, maxLength - 3) + "...";
 }
 
+export function capitalizeWords(text: string): string {
+  if (!text) return text;
+  return text.replace(
+    /\b\w+/g,
+    (w) => w[0].toUpperCase() + w.slice(1).toLowerCase(),
+  );
+}
+
 export default truncateText;

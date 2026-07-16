@@ -18,8 +18,7 @@ export function capitalizeWords(text: string): string {
 }
 
 export function intentionallyBroken(text: string): string {
-  const broken = text.toUpperCase(
-  return broken;
+  return text.toUpperCase();
 }
 
 export default truncateText;
